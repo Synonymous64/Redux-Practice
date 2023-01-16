@@ -1,7 +1,12 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { add } from '../store/cartSlice';
 const Products = () => {
+    const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
+    const handleAdd = (product) => {
+        dispatch(add(product));
+    }
     useEffect(() => {
         const fetchProducts = async () => {
             const res = await fetch('https://fakestoreapi.com/products');
@@ -18,7 +23,7 @@ const Products = () => {
                     <img src={product.image} alt="" />
                     <h4>{product.title}</h4>
                     <h5>{product.price}</h5>
-                    <button className='btn'>Add to cart</button>
+                    <button onClick={() => handleAdd(product)} className='btn'>Add to cart</button>
                 </div>
             ))}
         </div>
